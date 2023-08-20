@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const qrControl = require("./qr.controller");
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
     const { name: qr } = req.body;
     const result = await qrControl.created(qr);
     res.send(`<img src=${result} />`);
-  } catch (err) {
-    res.send("error voo");
+  } catch (e) {
+    next(e);
   }
 });
 module.exports = router;

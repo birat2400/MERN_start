@@ -1,13 +1,14 @@
 const router = require("express").Router();
 const paisa = require("./currency.controller");
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
-    // const { amount: Am } = req.body;
-    const currencyConverter = await paisa.ccapp();
-    res.send(currencyConverter);
+    const { from, to, amount } = req.body;
+    const currencyConverter = await paisa.ccapp({ from, to, amount });
+    res.send(currencyConverter.toString());
   } catch (error) {
-    res.send("not working sathi");
+    currencyConverter;
+    next(error);
   }
 });
 module.exports = router;
