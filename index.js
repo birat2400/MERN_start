@@ -12,6 +12,10 @@ app.use((err, req, res, next) => {
       : err.toString();
   res.status(500).send(err);
 });
+app.set('view engine', 'ejs');
+app.set('views','./views');
 
-app.listen(4002);
+app.use(express.static('public'));
+
+app.listen(4007);
 console.log("running");

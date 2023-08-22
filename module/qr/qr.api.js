@@ -7,6 +7,7 @@ router.post("/", async (req, res, next) => {
     const result = await qrControl.created(qr);
     res.send(`<img src=${result} />`);
   } catch (e) {
+    result;
     next(e);
   }
 });
