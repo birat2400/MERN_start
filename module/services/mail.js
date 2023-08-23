@@ -7,18 +7,18 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: "sthabirat057@gmail.com",
-    pass: "###############",
+    pass: "",
   },
 });
 
-const main = async () => {
-  console.log(info);
+const main = async (mailer) => {
+  const { from, to, subject, text, html } = mailer;
   const info = await transporter.sendMail({
-    from: '"sthabirat057@gmail.com" ',
-    to: "sthabirat057@gmail.com",
-    subject: "Hello ✔",
-    text: "Hello world?",
-    html: "<b>Hello world?</b>",
+    from: from,
+    to: to,
+    subject: subject,
+    text: text,
+    html: html,
   });
 };
 
