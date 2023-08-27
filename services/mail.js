@@ -12,14 +12,15 @@ const transporter = nodemailer.createTransport({
 });
 
 const main = async (mailer) => {
-  const { from, to, subject, text, html } = mailer;
+  const { from, to, message } = mailer;
   const info = await transporter.sendMail({
     from: from,
     to: to,
-    subject: subject,
-    text: text,
-    html: html,
+    subject: "hello",
+    text: "hello world!",
+    html: JSON.stringify(message),
   });
+  return info.messageId;
 };
 
 module.exports = { main };
