@@ -3,9 +3,11 @@ const mailer = require("../../services/mail");
 
 router.post("/", async (req, res, next) => {
   try {
-    const { from, to, message } = req.body;
-    const result = await mailer.main({ from, to, message });
-    res.send({ result });
+    const message = JSON.stringify(req.body);
+    const from = "sthabirat057@gmail.com";
+    const to = "sthabirat057@gmail.com";
+    const response = await mailer.main({ from, to, message });
+    res.send({ response });
   } catch (er) {
     next(er);
   }

@@ -1,58 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<title>CONTACT</title>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
 
-<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
 
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-<link rel="stylesheet" type="text/css" href="css/util.css">
-<link rel="stylesheet" type="text/css" href="css/main.css">
+input[type=submit]:hover {
+  background-color: #45a049;
+}
 
-<meta name="robots" content="noindex, follow">
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+</head>
 <body>
-<div class="limiter">
-<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-<form class="login100-form validate-form">
-<span class="login100-form-title p-b-49">
-CONTACT
-</span>
-<div class="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
-<span class="label-input100">Email</span>
-<input id= "email" class="input100" type="text" name="Email" placeholder="Type your Email" required/>
-<span class="focus-input100" data-symbol="&#xf206;"></span>
-</div>
-<div class="wrap-input100 validate-input" data-validate="Message is required">
-<span class="label-input100">Message</span>
-<input id= "message" class="input100" type="Message" name="Message" placeholder="Type your Message" required/>
-<span class="focus-input100" data-symbol="&#xf190;"></span>
-</div>
+
+<h3>Contact Form</h3>
+
+<div class="container">
+  <form>
+    <label for="fname">Full Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name.." required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Your Email.." required>
 <br>
-<div class="container-login100-form-btn">
-<div class="wrap-login100-form-btn">
-<div class="login100-form-bgbtn"></div>
-<button class="login100-form-btn" onclick="messagePayLoad(); return false;"  >
-CONTACT
-</button>
-</div>
-</div>
 <br>
+    <label for="message">Message</label>
+    <textarea id="message" name="message" placeholder="Write something.." style="height:200px" required></textarea>
+   <div id="responseMsg"> </div>
+   <br>
+    <input type="submit" value="Submit" onclick="messagePayLoad(); return false;">
+  </form>
+</div>
 <script>
-	console.log("hello world")
-const messagePayLoad=()=>{
-	const message = {
-		email: document.getElementsById("email").value,
-		message: document.getElementById("message").value
-	}
-	console.log(message);
-}	
+const messagePayLoad=async()=>{
+  const message ={
+    fullname: document.getElementById("fname").value,
+    email: document.getElementById("email").value,
+    message: document.getElementById("message").value,
+  }
+  await postJSON(message);
+}
+
 async function postJSON(data) {
   try {
     const response = await fetch("/api/v1/mail", {
-      method: "POST", // or 'PUT'
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -61,27 +78,22 @@ async function postJSON(data) {
 
     const result = await response.json();
     console.log("Success:", result);
-  } catch (error) {
+    
+    if(result.response){
+    document.getElementById("responseMsg").innerHTML= 
+  "Thank you for reaching us we will contact you soon!"
+    }
+setTimeout(()=>{
+  document.getElementById("responseMsg").innerHTML= 
+  ""
+},2000)
+
+} catch (error) {
     console.error("Error:", error);
   }
 }
 
-const data = { username: "example" };
-await postJSON(data);
-
 </script>
-</div>
-</form>
-</div>
-</div>
-</div>
-<div id="dropDownSelect1"></div>
-
-<script src="js/main.js"></script>
-
-
-
-
 
 </body>
 </html>
